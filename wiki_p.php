@@ -281,8 +281,12 @@
                             unset($bold);
                         }
 
+                        if ($linkT === '0') {
+                            $linkT = '０';
+                        }
                         $linkT = preg_replace('/\?/', '%3F', $linkT);
-                        $linkT = preg_replace('/0/', '０', $linkT);
+                        $linkT = preg_replace('/\#/', '%2F', $linkT);
+                        $linkT = preg_replace('/\&/', '%26', $linkT);
 
                         if($linkS == ''){
                             $doc = str_ireplace($linkA, $bold.'<a '.$linkC.$linkT.'">'.$linkT.'</a>'.$bold, $doc);
