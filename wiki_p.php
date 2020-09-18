@@ -88,13 +88,17 @@
                             $inc20 = $title[22][$i];
                         }
                     }
+                    if ($incT == $document['title']) {
+                        continue;
+                    }
 
                     $incA = $title[0][$i];
 
                     $sql = "SELECT `content` FROM `_article` WHERE `title` = '$incT'";
                     $result = mysqli_query($conn, $sql);
                     if(mysqli_num_rows($result) !== 1){
-                        break;
+                        $doc = str_ireplace($incA, '<a href="/w/$incT">$incT</a>');
+                        continue;
                     }
                     $row = mysqli_fetch_assoc($result);
                     $incCon = documentRender($row['content'], FALSE, TRUE);
@@ -262,9 +266,9 @@
                         $sql = "SELECT `num` FROM `_article` WHERE `title` = '$linkT'";
                         $result = mysqli_query($conn, $sql);
                         if(mysqli_num_rows($result) < 1){
-                            $linkC = 'class="link-red" ';
+                            $linkC = 'class="link-red" href="/e/';
                         }else{
-                            unset($linkC);
+                            $linkC = 'href="/w/'
                         }
 
                         if($isAnchor){
@@ -278,11 +282,12 @@
                         }
 
                         $linkT = preg_replace('/\?/', '%3F', $linkT);
+                        $linkT = preg_replace('/0/', '０', $linkT);
 
                         if($linkS == ''){
-                            $doc = str_ireplace($linkA, $bold.'<a '.$linkC.'href="/w/'.$linkT.'">'.$linkT.'</a>'.$bold, $doc);
+                            $doc = str_ireplace($linkA, $bold.'<a '.$linkC.$linkT.'">'.$linkT.'</a>'.$bold, $doc);
                         }else{
-                            $doc = str_ireplace($linkA, $bold.'<a '.$linkC.'href="/w/'.$linkT.'">'.$linkS.'</a>'.$bold, $doc);
+                            $doc = str_ireplace($linkA, $bold.'<a '.$linkC.$linkT.'">'.$linkS.'</a>'.$bold, $doc);
                         }
                         if ($i > 5000) {
                             die('하이퍼링크가 너무 많습니다!');
