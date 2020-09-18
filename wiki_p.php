@@ -97,7 +97,7 @@
                     $sql = "SELECT `content` FROM `_article` WHERE `title` = '$incT'";
                     $result = mysqli_query($conn, $sql);
                     if(mysqli_num_rows($result) !== 1){
-                        $doc = str_ireplace($incA, '<a href="//$incT">$incT</a>');
+                        $doc = str_ireplace($incA, '<a href="/e/$incT">$incT</a>');
                         continue;
                     }
                     $row = mysqli_fetch_assoc($result);
