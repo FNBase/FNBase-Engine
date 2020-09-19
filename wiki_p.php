@@ -1,6 +1,7 @@
 <?php
     ini_set('pcre.backtrack_limit', '3000000000000000');
     require_once 'setting.php';
+    require_once 'func.php'
     function myUrlEncode($string) {
         $replacements = array('%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%2B', '%24', '%2C', '%2F', '%3F', '%25', '%2523', '%5B', '%5D');
         $entities = array('!', '*', "'", "(", ")", ";", ":", "@", "&", "=", "+", "$", ",", "/", "?", "%", "#", "[", "]");
@@ -105,6 +106,7 @@
 
                     $incA = $title[0][$i];
 
+                    $incT = filt($filt, 'htm');
                     $sql = "SELECT `content` FROM `_article` WHERE `title` = '$incT'";
                     $result = mysqli_query($conn, $sql);
                     if(mysqli_num_rows($result) !== 1){
@@ -229,6 +231,7 @@
                         unset($link_arr, $isAnchor);
                         $linkT = $link[1][$i];
 
+                        $linkT = filt($linkT, 'htm');
                         $sql = "SELECT `content`, `namespace` FROM `_article` WHERE `title` = '분류/$linkT'";
                         $result = mysqli_query($conn, $sql);
                         if(mysqli_num_rows($result) < 1){
@@ -269,6 +272,7 @@
                             $isAnchor = TRUE;
                         }
 
+                        $linkT = filt($linkT, 'html')
                         $sql = "SELECT `num` FROM `_article` WHERE `title` = '$linkT'";
                         $result = mysqli_query($conn, $sql);
                         if(mysqli_num_rows($result) < 1){
