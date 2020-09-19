@@ -272,7 +272,7 @@
                             $isAnchor = TRUE;
                         }
 
-                        $linkT = filt($linkT, 'html')
+                        $linkT = filt($linkT, 'htm')
                         $sql = "SELECT `num` FROM `_article` WHERE `title` = '$linkT'";
                         $result = mysqli_query($conn, $sql);
                         if(mysqli_num_rows($result) < 1){
