@@ -1,4 +1,4 @@
-<?php
+<?php 
 if(!file_exists('setting.php')){
     require 'install/index.php';
     exit;
