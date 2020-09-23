@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<title>test</title>
+		<link rel="stylesheet" href="./picnic.css">
+		<style>
+			/*.pseudo {
+				width: 30px; height: 30px;
+				margin: 0; padding: 0;
+			}
+			.pseudo > * {
+				margin: 0; padding: 0;
+				text-align: center; vertical-align: middle;
+			}*/
+		</style>
+	</head>
+	<body>
+		<div id="editPlaceText">
+			<div id="editBar">
+				<button class="pseudo" id="editor-strong"><strong class="editor-icon">B</strong></button>
+				<button class="pseudo" id="editor-em"><em class="editor-icon">I</em></button>
+				<button class="pseudo" id="editor-strike"><strike>S</strike></button>
+				<button class="pseudo" id="editor-muted"><span style="color: gray;">G</span></button>
+				<button class="pseudo" id="editor-sup"><span>x²</span></button>
+				<button class="pseudo" id="editor-sub"><span>x₂</span></button>
+				<button class="pseudo" id="editor-u"><u>U</u></button>
+			</div>
+			<textarea id="mainEditor"></textarea>
+		</div>
+		<script src="./editor.js"></script>
+	</body>
+</html>
