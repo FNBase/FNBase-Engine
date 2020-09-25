@@ -3,6 +3,7 @@
 	<head>
 		<title>test</title>
 		<link rel="stylesheet" href="./picnic.css">
+		<link rel="stylesheet" href="./icofont/icofont.css">
 		<style>
 			/*.pseudo {
 				width: 30px; height: 30px;
@@ -24,6 +25,51 @@
 				<button class="pseudo" id="editor-sup"><span>x²</span></button>
 				<button class="pseudo" id="editor-sub"><span>x₂</span></button>
 				<button class="pseudo" id="editor-u"><u>U</u></button>
+				<button class="pseudo" id="editor-ul"><i class="icofont-listine-dots"></i></button>
+				<button class="pseudo" id="editor-blockquote"><i class="icofont-quote-left"></i></button>
+				<button class="pseudo" id="editor-inlink"><i class="icofont-ui-clip"></i> </button>
+				<label class="button pseudo" id="editor-exlink" for="editor-exlink-modal"><i class="icofont-link"></i></label>
+				<div class="modal">
+					<input type="checkbox" id="editor-exlink-modal" />
+					<label for="editor-exlink-modal" class="overlay"></label>
+					<article>
+						<header>
+							<h3>외부 링크 삽입</h3>
+							<label for="editor-exlink-modal" class="close">&times;</label>
+						</header>
+						<section class="content">
+							<label>
+								<input type="radio" name="exlink" value="locate" id="locate" />
+								<span class="checkable">주소 직접입력</span>
+							</label><br />
+							<label>
+								<input type="radio" name="exlink" value="kowiki" id="kowiki" />
+								<span class="checkable">한국어 위키백과</span>
+							</label><br />
+							<label>
+								<input type="radio" name="exlink" value="enwiki" id="enwiki" />
+								<span class="checkable">영어 위키백과</span>
+							</label><br />
+							<label>
+								<input type="radio" name="exlink" value="flqmfp" id="flqmfp" />
+								<span class="checkable">리브레 위키</span>
+							</label><br />
+							<label>
+								<input type="radio" name="exlink" value="skarka" id="skarks" />
+								<span class="checkable">나무위키</span>
+							</label><br />
+							<label>
+								<input type="radio" name="exlink" value="fnbase" id="fnbase" />
+								<span class="checkable">FNBase</span>
+							</label><br /><br />
+							<span>문서 제목</span><input type="text" name="exlink-title" id="exlink-title" />
+						</section>
+						<footer>
+				      <a class="button" id="editor-insertExlink">삽입</a>
+				      <label for="editor-exlink-modal" class="button dangerous">취소</label>
+				    </footer>
+					</article>
+				</div>
 			</div>
 			<textarea id="mainEditor"></textarea>
 		</div>
