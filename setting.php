@@ -4,9 +4,9 @@ $fnVersion = '2.2'; #세팅 파일이 작성될 때의 버전입니다.
 
 #데이터베이스 연결 설정입니다.
 $fnSiteDB = 'localhost'; #데이터베이스 주소
-$fnSiteDBuser = ''; #데이터베이스 유저
-$fnSiteDBpw = ''; #데이터베이스 비밀번호
-$fnSiteDBname = ''; #기본 데이터베이스 이름
+$fnSiteDBuser = 'root'; #데이터베이스 유저
+$fnSiteDBpw = 'Poiu5425'; #데이터베이스 비밀번호
+$fnSiteDBname = 'test'; #기본 데이터베이스 이름
 $conn = mysqli_connect("$fnSiteDB", "$fnSiteDBuser", "$fnSiteDBpw", "$fnSiteDBname");
 
 

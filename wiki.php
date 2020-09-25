@@ -92,12 +92,12 @@
         <meta name="classification" content="html">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
         <!-- 정보 -->
         <title><?=$fnTitle?></title>
         <meta name="description" content="<?=$fnDesc?>">
         <meta property="og:type" content="website">
-    
+
         <!-- 불러오기 -->
         <style>
             @media (min-width: 300px) and (max-width: 1800px) {
@@ -175,7 +175,7 @@
             <div class="hidMob">
             </div>
             <section id="mainArticle" class="half">
-                <?php 
+                <?php
                 if($_GET['on'] == 'discussPage'){
                     $pgNum = filt($_GET['d_num'], '123');
                     $pgMent = filt($_GET['ment'], '123');
@@ -225,22 +225,22 @@
                                     <section>';
                             $sql = "SELECT * FROM `_discussThread` WHERE `origin` = '$pgNum'";
                             $result = mysqli_query($conn, $sql);
-                            
+
                             $d = 1;
                             while($row = mysqli_fetch_assoc($result)){
                                 $wE = $row['id'];
                                 $sqln = "SELECT `name` FROM `_account` WHERE `id` = '$wE'";
                                 $resultn = mysqli_query($conn, $sqln);
-                        
+
                                 if(mysqli_num_rows($resultn) < 1){
                                     $name = $wE;
-                        
+
                                     $icon = 'invisible';
                                     $href = '/misc%3EmanageCenter%3E'.$wE;
                                 }else{
                                     $name = mysqli_fetch_assoc($resultn);
                                     $name = $name['name'];
-                        
+
                                     $icon = 'user-alt-7';
                                     $href = '/u/'.$wE;
                                 }
@@ -372,7 +372,7 @@
 
                                         if(mysqli_num_rows($resultn) < 1){
                                             $name = $wE;
-                                
+
                                             $icon = 'invisible';
                                             $href = '/misc%3EmanageCenter%3E'.$wE;
                                             if($isAdmin){
@@ -381,7 +381,7 @@
                                         }else{
                                             $name = mysqli_fetch_assoc($resultn);
                                             $name = $name['name'];
-                                
+
                                             $icon = 'user-alt-7';
                                             $href = '/u/'.$wE;
                                         }
@@ -421,13 +421,13 @@
 
                                             if(mysqli_num_rows($resultn) < 1){
                                                 $name = $wE;
-                                    
+
                                                 $icon = 'invisible';
                                                 $href = '/misc%3EmanageCenter%3E'.$wE;
                                             }else{
                                                 $name = mysqli_fetch_assoc($resultn);
                                                 $name = $name['name'];
-                                    
+
                                                 $icon = 'user-alt-7';
                                                 $href = '/u/'.$wE;
                                             }
@@ -453,13 +453,13 @@
 
                                             if(mysqli_num_rows($resultn) < 1){
                                                 $name = $wE;
-                                    
+
                                                 $icon = 'invisible';
                                                 $href = '/misc%3EmanageCenter%3E'.$wE;
                                             }else{
                                                 $name = mysqli_fetch_assoc($resultn);
                                                 $name = $name['name'];
-                                    
+
                                                 $icon = 'user-alt-7';
                                                 $href = '/u/'.$wE;
                                             }
@@ -799,7 +799,7 @@
                                             echo '</div>
                                         </div>';
                                     break;
-                                
+
                                 default:
                                     echo '<br><table class="full">';
                                     echo '<tbody>';
@@ -954,7 +954,7 @@
                                 <input type="checkbox" name="forGrandpa"<--?=$forG?>>
                                 <span class="checkable">글씨 크게</span>
                             </label>-->
-                        
+
                             <button class="button full" type="submit">설정 저장</button>
                         </section>
                     </form>
@@ -1169,7 +1169,7 @@
             if($_GET['on'] == 'discuss'){
                 echo '<script>wikiDiscuss(\''.myUrlEncode($fnwTitle).'\');</script>';
             }elseif($_GET['on'] == 'edit'){
-                echo '<script>wikiEdit(\''.myUrlEncode($fnwTitle).'\');</script>';
+                echo '<script>wikiEdit(\''.myUrlEncode($fnwTitle).'\');</script><script src="/editor.js"></script>';
             }elseif($_GET['on'] == 'history'){
                 echo '<script>wikiHistory(\''.myUrlEncode($fnwTitle).'\');</script>';
             }

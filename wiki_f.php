@@ -65,17 +65,17 @@
 if($canEdit){
     ?>
     <div id="editBar">
-      <button class="pseudo" id="editor-strong"><strong class="editor-icon">B</strong></button>
-      <button class="pseudo" id="editor-em"><em class="editor-icon">I</em></button>
-      <button class="pseudo" id="editor-strike"><strike>S</strike></button>
-      <button class="pseudo" id="editor-muted"><span style="color: gray;">G</span></button>
-      <button class="pseudo" id="editor-sup"><span>x²</span></button>
-      <button class="pseudo" id="editor-sub"><span>x₂</span></button>
-      <button class="pseudo" id="editor-u"><u>U</u></button>
-      <button class="pseudo" id="editor-inlink"><i class="icofont-ui-clip"></i></button>
-      <button class="pseudo" id="editor-ul"><i class="icofont-listine-dots"></i></button>
-      <button class="pseudo" id="editor-blockquote"><i class="icofont-quote-left"></i></button>
-      <button class="pseudo" id="editor-indent"><i class="icofont-login"></i></button>
+      <button class="pseudo" id="editor-strong"     onclick="editorStrong()"><strong class="editor-icon">B</strong></button>
+      <button class="pseudo" id="editor-em"         onclick="editorEm()"><em class="editor-icon">I</em></button>
+      <button class="pseudo" id="editor-strike"     onclick="editorStrike()"><strike>S</strike></button>
+      <button class="pseudo" id="editor-muted"      onclick="editorMuted()"><span style="color: gray;">G</span></button>
+      <button class="pseudo" id="editor-sup"        onclick="editorSup()"><span>x²</span></button>
+      <button class="pseudo" id="editor-sub"        onclick="editorSub()"><span>x₂</span></button>
+      <button class="pseudo" id="editor-u"          onclick="editorU()"><u>U</u></button>
+      <button class="pseudo" id="editor-inlink"     onclick="editorInlink()"><i class="icofont-ui-clip"></i></button>
+      <button class="pseudo" id="editor-ul"         onclick="editorUl()"><i class="icofont-listine-dots"></i></button>
+      <button class="pseudo" id="editor-blockquote" onclick="editorBlockquote()"><i class="icofont-quote-left"></i></button>
+      <button class="pseudo" id="editor-indent"     onclick="editorIndent()"><i class="icofont-login"></i></button>
       <label for="editor-modal-style" class="button pseudo" id="editor-style"><i class="icofont-magic"></i></label>
       <div class="modal">
         <input type="checkbox" id="editor-modal-style">
@@ -110,7 +110,7 @@ if($canEdit){
             </select>
           </section>
           <footer>
-            <a id="editor--style" href="#" class="button">삽입</a>
+            <a id="editor--style" href="#" class="button" onclick="editorStyle();">삽입</a>
             <label for="editor-modal-style" class="button dangerous">
               취소
             </label>
@@ -125,7 +125,6 @@ if($canEdit){
     <button type="button" style="background:green" class="full" onclick="notSubmit=false;wikiSave()"><i class="icofont-diskette"></i> 저장하기</button>
     <button type="button" style="background:gray" class="full" onclick="editCancle()"><i class="icofont-error"></i> 취소하기</button>
     <input type="hidden" name="title" value="<?=$document['title']?>"></form>
-		<script src="/editor.js"></script>
     <?php
 }else{
     echo '<div id="contentForm">편집 권한이 부족하여, 원본 텍스트만 표시됩니다.
