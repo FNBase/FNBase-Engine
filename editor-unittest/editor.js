@@ -23,7 +23,31 @@ document.querySelector("#editor-inlink").addEventListener('click', editorCallbac
 document.querySelector('#editor-ul').addEventListener('click', editorCallback("\n * ", ""));
 document.querySelector('#editor-blockquote').addEventListener('click', editorCallback("\n > ", ""));
 document.querySelector("#editor-indent").addEventListener('click', editorCallback("\n : ", ""));
-document.querySelector("#editor-magic").addEventListener('click', editorMagic);
-function editorMagic() {
-
+document.querySelector("#editor--style").addEventListener('click', editorStyle);
+function editorStyle() {
+	var styleType = document.querySelector("input[name=\"editor-style\"]:checked").value;
+	var prefix = "";
+	switch (styleType) {
+		case "style":
+			prefix = "!#wiki style=\"" + document.querySelector("#editor-style-style-value").value + "\""; break;
+		case "color":
+			prefix = document.querySelector("#editor-style-color-value").value; break;
+		case "size":
+			var size = document.querySelector("#editor-style-size-value").selectedIndex;
+			switch (size) {
+				case 0: prefix = "-5"; break;
+				case 1: prefix = "-4"; break;
+				case 2: prefix = "-3"; break;
+				case 3: prefix = "-2"; break;
+				case 4: prefix = "-1"; break;
+				case 5: prefix = "+1"; break;
+				case 6: prefix = "+2"; break;
+				case 7: prefix = "+3"; break;
+				case 8: prefix = "+4"; break;
+				case 9: prefix = "+5"; break;
+			}
+			break;
+	}
+	document.getElementById('editor-modal-style').checked = false;
+	editorCallback("{{{" + prefix + ' ', "}}}")();
 }
