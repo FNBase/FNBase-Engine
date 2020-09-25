@@ -1,4 +1,11 @@
-<?php header("HTTP/1.1 451 Unavailable For Legal Reasons"); require_once 'setting.php'; include 'func.php'; ?>
+<?php header("HTTP/1.1 451 Unavailable For Legal Reasons"); require_once 'setting.php'; include 'func.php';
+  $sql = "SELECT `siteBan` FROM `_account` WHERE `id` = '$id'";
+  $result = mysqli_query($conn, $sql);
+  $sB = mysqli_fetch_assoc($result);
+  if($sB['siteBan'] <= 0){
+    echo '<script>location.href = "/main"</script>';
+    exit;
+?>
 <!DOCTYPE html>
 <html lang="ko-KR">
   <head>
