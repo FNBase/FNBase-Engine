@@ -156,3 +156,10 @@ table tr {
 } #tocDiv * ::marker {
 	color: blue;
 }
+
+.editBar input[type="radio"] + label + * {
+	display: none;
+}
+.editBar input[type="radio"]:checked + label + * {
+	display: block;
+}
