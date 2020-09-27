@@ -35,7 +35,7 @@ if (!$conn) {
       `userIntro` varchar(500) NOT NULL COMMENT '이용자 소개글',
       `point` int(11) NOT NULL COMMENT '활동 정산 포인트'
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='이용자 계정 정보';
-    
+
     CREATE TABLE `_ad` (
       `num` int(11) NOT NULL COMMENT '정렬 및 조회를 위한 번호',
       `id` text NOT NULL COMMENT '이용자 아이디',
@@ -45,7 +45,7 @@ if (!$conn) {
       `ad` text NOT NULL,
       `link` varchar(250) DEFAULT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='광고 출력';
-    
+
     CREATE TABLE `_article` (
       `num` int(11) NOT NULL COMMENT '정렬 및 조회를 위한 번호',
       `type` char(10) NOT NULL COMMENT '유형',
@@ -59,7 +59,7 @@ if (!$conn) {
       `ACL` varchar(10) DEFAULT NULL,
       `execute` text
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='위키 문서';
-    
+
     CREATE TABLE `_auth` (
       `num` bigint(20) NOT NULL,
       `begin` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '시작 일시',
@@ -68,7 +68,7 @@ if (!$conn) {
       `value` varchar(20) NOT NULL COMMENT '값',
       `end` datetime DEFAULT NULL COMMENT '종료 일시'
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='인증에 사용됩니다.';
-    
+
     CREATE TABLE `_board` (
       `num` int(11) NOT NULL COMMENT '정렬 및 조회를 위한 번호',
       `id` text NOT NULL COMMENT '이용자 아이디',
@@ -89,7 +89,7 @@ if (!$conn) {
       `rct` tinyint(1) NOT NULL DEFAULT '1',
       `tagSet` varchar(60) NOT NULL DEFAULT '기본, 잡담'
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='게시판';
-    
+
     CREATE TABLE `_comment` (
       `num` int(11) NOT NULL COMMENT '정렬 및 조회를 위한 번호',
       `id` text NOT NULL COMMENT '이용자 아이디',
@@ -107,7 +107,7 @@ if (!$conn) {
       `isEdited` datetime DEFAULT NULL,
       `whoEdited` text
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='일반 댓글';
-    
+
     CREATE TABLE `_content` (
       `num` int(11) NOT NULL COMMENT '정렬 및 조회를 위한 번호',
       `id` text NOT NULL COMMENT '이용자 아이디',
@@ -135,7 +135,7 @@ if (!$conn) {
       `hideMain` tinyint(1) DEFAULT NULL,
       `actmeter` datetime DEFAULT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='일반 게시글';
-    
+
     CREATE TABLE `_discuss` (
       `num` int(11) NOT NULL,
       `at` datetime NOT NULL,
@@ -145,7 +145,7 @@ if (!$conn) {
       `status` varchar(10) NOT NULL,
       `lastEdit` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='위키 토론';
-    
+
     CREATE TABLE `_discussThread` (
       `num` bigint(20) NOT NULL,
       `at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -155,7 +155,7 @@ if (!$conn) {
       `content` text NOT NULL,
       `status` varchar(10) NOT NULL DEFAULT 'ACTIVE'
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-    
+
     CREATE TABLE `_fnbcon` (
       `num` int(11) NOT NULL COMMENT '정렬 및 조회를 위한 번호',
       `id` text COMMENT '이용자 아이디',
@@ -170,7 +170,7 @@ if (!$conn) {
       `use` int(11) NOT NULL COMMENT '사용자 수',
       `cost` smallint(5) NOT NULL COMMENT '이모티콘 가격'
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='기본 테이블 셋';
-    
+
     CREATE TABLE `_history` (
       `num` int(11) NOT NULL,
       `title` text NOT NULL,
@@ -179,14 +179,15 @@ if (!$conn) {
       `rev` longtext,
       `comment` varchar(100) DEFAULT NULL,
       `at` datetime NOT NULL,
-      `modify?` varchar(10) DEFAULT NULL
+      `modify?` varchar(10) DEFAULT NULL,
+      `ACL` varchar(10) DEFAULT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='위키 편집 기록';
-    
+
     CREATE TABLE `_ipban` (
       `num` bigint(20) NOT NULL COMMENT '순번',
       `ip` text NOT NULL COMMENT '아이피 주소'
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='아이피 기반 비회원 차단';
-    
+
     CREATE TABLE `_log` (
       `num` int(11) NOT NULL COMMENT '정렬 및 조회를 위한 번호',
       `id` text NOT NULL COMMENT '이용자 아이디',
@@ -196,7 +197,7 @@ if (!$conn) {
       `ip` text NOT NULL,
       `isSuccess` tinyint(1) NOT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='로그인 기록';
-    
+
     CREATE TABLE `_ment` (
       `num` int(11) NOT NULL COMMENT '정렬 및 조회를 위한 번호',
       `id` text NOT NULL COMMENT '이용자 아이디',
@@ -210,7 +211,7 @@ if (!$conn) {
       `ip` text,
       `isSuccess` tinyint(1) NOT NULL DEFAULT '0'
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='알림 / 호출';
-    
+
     CREATE TABLE `_othFunc` (
       `num` int(11) NOT NULL COMMENT '정렬 및 조회를 위한 번호',
       `id` text NOT NULL COMMENT '이용자 아이디',
@@ -223,7 +224,7 @@ if (!$conn) {
       `ip` text,
       `isSuccess` tinyint(1) NOT NULL DEFAULT '0'
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='기타 중요도 낮은 기능';
-    
+
     CREATE TABLE `_setting` (
       `num` int(11) NOT NULL COMMENT '정렬 및 조회를 위한 번호',
       `type` char(10) NOT NULL COMMENT '유형',
@@ -243,7 +244,7 @@ if (!$conn) {
       `siteTimezone` varchar(25) NOT NULL DEFAULT 'Asia/Seoul' COMMENT '기본 시간대',
       `recentHide` text COMMENT '종합 글 목록 미노출 게시판'
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='사이트 전체설정';
-    
+
     CREATE TABLE `_skinSet` (
       `num` int(11) NOT NULL COMMENT '정렬 및 조회를 위한 번호',
       `author` text NOT NULL COMMENT '제작자 표시',
@@ -254,14 +255,14 @@ if (!$conn) {
       `DefaultColor` text NOT NULL COMMENT '기본 색상',
       `Subcolor` text NOT NULL COMMENT '보조 색상'
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='스킨 개별 설정';
-    
+
     CREATE TABLE `_upload` (
       `filename` text NOT NULL,
       `at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
       `ip` text NOT NULL,
       `num` int(11) NOT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='업로드 기록';
-    
+
     CREATE TABLE `_userSet` (
       `num` int(11) NOT NULL COMMENT '정렬 및 조회를 위한 번호',
       `id` text NOT NULL COMMENT '이용자 아이디',
@@ -278,70 +279,70 @@ if (!$conn) {
       `tempSave` text COMMENT '임시 저장',
       `wikiColor` varchar(13) DEFAULT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='이용자 개인 설정';
-    
-    
+
+
     ALTER TABLE `_account`
       ADD PRIMARY KEY (`num`),
       ADD UNIQUE KEY `id` (`id`),
       ADD UNIQUE KEY `name` (`name`);
-    
+
     ALTER TABLE `_ad`
       ADD PRIMARY KEY (`num`);
-    
+
     ALTER TABLE `_article`
       ADD PRIMARY KEY (`num`);
-    
+
     ALTER TABLE `_auth`
       ADD PRIMARY KEY (`num`);
-    
+
     ALTER TABLE `_board`
       ADD PRIMARY KEY (`num`),
       ADD UNIQUE KEY `title` (`title`),
       ADD UNIQUE KEY `slug` (`slug`);
-    
+
     ALTER TABLE `_comment`
       ADD PRIMARY KEY (`num`);
-    
+
     ALTER TABLE `_content`
       ADD PRIMARY KEY (`num`);
-    
+
     ALTER TABLE `_discuss`
       ADD PRIMARY KEY (`num`);
-    
+
     ALTER TABLE `_discussThread`
       ADD PRIMARY KEY (`num`);
-    
+
     ALTER TABLE `_fnbcon`
       ADD PRIMARY KEY (`num`);
-    
+
     ALTER TABLE `_history`
       ADD PRIMARY KEY (`num`);
-    
+
     ALTER TABLE `_ipban`
       ADD PRIMARY KEY (`num`);
-    
+
     ALTER TABLE `_log`
       ADD PRIMARY KEY (`num`);
-    
+
     ALTER TABLE `_ment`
       ADD PRIMARY KEY (`num`);
-    
+
     ALTER TABLE `_othFunc`
       ADD PRIMARY KEY (`num`);
-    
+
     ALTER TABLE `_setting`
       ADD PRIMARY KEY (`num`);
-    
+
     ALTER TABLE `_skinSet`
       ADD PRIMARY KEY (`num`);
-    
+
     ALTER TABLE `_upload`
       ADD PRIMARY KEY (`num`);
-    
+
     ALTER TABLE `_userSet`
       ADD PRIMARY KEY (`num`);
-    
-    
+
+
     ALTER TABLE `_account`
       MODIFY `num` int(11) NOT NULL AUTO_INCREMENT COMMENT '정렬 및 조회를 위한 번호', AUTO_INCREMENT=0;
     ALTER TABLE `_ad`
@@ -606,10 +607,10 @@ function get_client_ip(){
       $ipaddress = getenv(\'REMOTE_ADDR\');
     else
       $ipaddress = \'0.4.0.4\';
-   
+
     return $ipaddress;
 }
-  
+
 $ip = get_client_ip();
 
 if($fnType == \'OFF\'){
