@@ -37,7 +37,7 @@ function notify() {
                             icon: '/icon.png',
                             body: text,
                         });
-        
+
                         notification.onclick = function () {
                             window.open('http://fnbase.xyz/nofi', '_self');
                         };
@@ -213,7 +213,7 @@ function wikiRollback(arg, num){
     fetch('/wiki_v.php?mode=rollback&title='+arg+'&num='+num).then(function(response){
         response.text().then(function(text){
             alert(text);
-            if(text.length > 10){
+            if(text.includes("성공")){
                 location.href = '/h/'+arg;
             }
         })
@@ -247,13 +247,13 @@ function wikiKeepWrite(){
                 document.body.appendChild(dialog);
                 dialog.id = "dialog";
                 dialog.style.visibility = "hidden";
-                dialog.innerHTML = message; 
+                dialog.innerHTML = message;
                 var left = document.body.clientWidth / 2 - dialog.clientWidth / 2;
                 dialog.style.left = left + "px";
-                dialog.style.visibility = "visible";  
+                dialog.style.visibility = "visible";
                 var shadow = document.createElement("div");
                 document.body.appendChild(shadow);
-                shadow.id = "shadow";		
+                shadow.id = "shadow";
                 //tip with setTimeout
                 setTimeout(function () {
                     document.body.removeChild(document.getElementById("dialog"));
@@ -263,6 +263,34 @@ function wikiKeepWrite(){
             return message;
         }
     }
+}
+
+function wikiHide(arg, num, isHidden){
+    fetch('/wiki_v.php?mode=hide&title='+arg+'&num='+num+'&hidden='+String(isHidden)).then(function(response){
+        response.text().then(function(text){
+            alert(text);
+            if (text.includes("성공")) {
+                location.href = '/h/'+arg;
+            }
+        })
+        if(response.status != '200'){
+            console.log('서버 통신 오류');
+        }
+    })
+}
+
+function wikiHideConf(isHidden) {
+  var message = "정말 숨기시겠습니까?"
+  if (isHidden) message = "정말 복구하시겠습니까?";
+  if (prevHisNum != false) {
+    if (confirm(message)) {
+      wikiHide(wikiTitle, prevHisNum, isHidden);
+    }
+  }
+  else {
+    alert("판을 찾을 수 없습니다.");
+    history.go(-1);
+  }
 }
 
 function tempSave(){

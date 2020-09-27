@@ -11,9 +11,9 @@
     $sql = "SELECT `isAdmin` FROM `_account` WHERE `id` = \"".$_SESSION['fnUserId'].'"';
     $result = mysqli_query($conn, $sql);
     $iA = mysqli_fetch_assoc($result);
-        if($iA['isAdmin']){
-            $isAdmin = TRUE;
-        }
+    if ($iA['isAdmin']) {
+        $isAdmin = TRUE;
+    }
 
 if($_GET['mode'] == 'view'){
     $num = filt($_GET['num'], 'htm');
@@ -21,7 +21,7 @@ if($_GET['mode'] == 'view'){
         die('번호가 비어있습니다.');
     }
 
-    $sql = "SELECT `rev`, `comment`, `id`, `name`, `modify?` FROM `_history` WHERE `num` = '$num'";
+    $sql = "SELECT `rev`, `comment`, `id`, `name`, `modify?`, `ACL` FROM `_history` WHERE `num` = '$num'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
     if($row['modify?'] != ''){
@@ -32,7 +32,19 @@ if($_GET['mode'] == 'view'){
         <a href="/u/'.$row['id'].'" class="right muted">-- <i class="icofont-user-alt-7"></i> '.$row['name'].'</a><br></div>';
     }
     $content = nl2br(documentRender($row['rev']));
-    echo preg_replace('/<br( \/)*>\n<hr>/m', '<hr>', preg_replace('/(src="|<hr>)(.*)<br( \/)*>/m', '$1$2', preg_replace('/<\/h(\d)><br \/>/m', '</h$1>', $content)));
+    if ($row['ACL'] == 'admin') {
+      echo '<strong><red>안내)</red> 이 판은 숨겨져 있습니다.</strong><br />';
+      if ($isAdmin) {
+        echo '<button class="dangerous" type="button" onclick="wikiHideConf(1)" style="font-size: .8em;"><i class="icofont-key"></i>복구하기</button><br />';
+        echo preg_replace('/<br( \/)*>\n<hr>/m', '<hr>', preg_replace('/(src="|<hr>)(.*)<br( \/)*>/m', '$1$2', preg_replace('/<\/h(\d)><br \/>/m', '</h$1>', $content)));
+      }
+    }
+    else {
+      if ($isAdmin) {
+        echo '<button class="dangerous" type="button" onclick="wikiHideConf(0)" style="font-size: .8em;"><i class="icofont-lock"></i>숨기기</button></br />';
+      }
+      echo preg_replace('/<br( \/)*>\n<hr>/m', '<hr>', preg_replace('/(src="|<hr>)(.*)<br( \/)*>/m', '$1$2', preg_replace('/<\/h(\d)><br \/>/m', '</h$1>', $content)));
+    }
 }elseif($_GET['mode'] == 'raw'){
     $num = filt($_GET['num'], 'htm');
     if(empty($num) and $num != '0'){
@@ -43,7 +55,7 @@ if($_GET['mode'] == 'view'){
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
 
-    echo nl2br(htmlspecialchars($row['rev']));  
+    echo nl2br(htmlspecialchars($row['rev']));
 }elseif($_GET['mode'] == 'diff'){
     $num = filt($_GET['num'], 'htm');
     if(empty($num) and $num != '0'){
@@ -126,7 +138,7 @@ if($_GET['mode'] == 'view'){
             }
             echo '/ <'.$color.'>('.$strLCac.')</'.$color.'></span></td></tr>';
         }
-        
+
         if($i > 30){
             break;
         }
@@ -150,8 +162,7 @@ if($_GET['mode'] == 'view'){
             $icon = 'user-alt-7';
             $href = '/u/'.$wE;
         }
-        
-        echo '<tr><td class="black muted"><a href="javascript:void(0)" onclick="wikiHisRev('.$row['num'].')">#'.$c.'번째 편집 ('.$row['at'].')</a>
+          echo '<tr><td class="black muted"><a href="javascript:void(0)" onclick="wikiHisRev('.$row['num'].')">#'.$c.'번째 편집 ('.$row['at'].')</a>
         <br><span class="subInfo"><i class="icofont-'.$icon.'"></i><a href="'.$href.'"> '.$name.'</a> ';
         $i++;
         $c--;
