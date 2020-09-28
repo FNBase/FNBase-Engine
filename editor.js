@@ -1,6 +1,7 @@
 function editorCallback(a, b) {
 	return function() {
 		var editor = document.querySelector('#mainEditor');
+		var scroll = editor.scrollTop;
 		var s = editor.selectionStart;
 		var e = editor.selectionEnd;
 		var selected = editor.value.substring(s, e);
@@ -8,6 +9,7 @@ function editorCallback(a, b) {
 		editor.focus();
 		if (s == e) editor.selectionEnd = s+a.length;
 		else				editor.selectionEnd = e+a.length+b.length;
+		editor.scrollTop = scroll;
 	};
 }
 
