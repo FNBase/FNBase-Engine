@@ -97,7 +97,7 @@
           if ($iA) {
             $num = $_GET['num'];
             if ($_GET['hidden'] == 'true') {
-              $sql = "UPDATE `_history` SET `ACL` = 'none' WHERE `num` = '$num'";
+              $sql = "UPDATE `_history` SET `ACL` = 'all' WHERE `num` = '$num'";
               mysqli_query($conn, $sql);
               die('#'.$num.' 판을 복구하는 데 성공했습니다.');
             }

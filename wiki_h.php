@@ -131,7 +131,8 @@ if($_GET['mode'] == 'view'){
         $l = '31';
     }
 
-    $sql = "SELECT * FROM `_history` WHERE `title` = '$fnwTitle' ORDER BY `num` DESC LIMIT $l";
+    $sql = "SELECT * FROM `_history` WHERE `title` = '$fnwTitle' AND (`ACL` = NULL OR `ACL` = 'all') ORDER BY `num` DESC LIMIT $l";
+    if ($isAdmin) $sql = "SELECT * FROM `_history` WHERE `title` = '$fnwTitle' ORDER BY `num` DESC LIMIT $l";
     $result = mysqli_query($conn, $sql);
 
     if(mysqli_num_rows($result) < 1){
@@ -176,6 +177,8 @@ if($_GET['mode'] == 'view'){
             $icon = 'user-alt-7';
             $href = '/u/'.$wE;
         }
+        if ($row['ACL'] == "admin") echo '<tr><td class="black muted"><del><a href="javascript:void(0)" onclick="wikiHisRev('.$row['num'].')">#'.$c.'번째 편집 ('.$row['at'].')</a></del>
+      <br><span class="subInfo"><i class="icofont-'.$icon.'"></i><a href="'.$href.'"> '.$name.'</a> '
           echo '<tr><td class="black muted"><a href="javascript:void(0)" onclick="wikiHisRev('.$row['num'].')">#'.$c.'번째 편집 ('.$row['at'].')</a>
         <br><span class="subInfo"><i class="icofont-'.$icon.'"></i><a href="'.$href.'"> '.$name.'</a> ';
         $i++;
