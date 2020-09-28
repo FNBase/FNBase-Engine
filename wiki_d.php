@@ -23,7 +23,7 @@
             $result = mysqli_query($conn, $sqla);
             $iA = mysqli_fetch_assoc($result);
             $iA = $iA['isAdmin'];
-    
+
             if($document['ACL'] === 'all'){
                 if($id){
                     $canEdit = TRUE;
@@ -39,14 +39,14 @@
             }else{
                 $canEdit = FALSE;
             }
-    
+
             if(!$iA){
                 $canManage = FALSE;
             }else{
                 $canEdit = TRUE;
                 $canManage = TRUE;
             }
-    
+
     if($_GET['mode'] == 'discuss'){
         if($canEdit){
             if($_SESSION['fnUserId']){
@@ -56,7 +56,7 @@
                 $id = $ip;
                 $name = $ip;
             }
-            
+
             $now = date('Y-m-d H:i:s');
             $discussName = filt($_POST['name'], 'htm');
             $content = filt($_POST['content'], 'oth');
@@ -84,7 +84,7 @@
                                     VALUES ('$id', '$name', 'WIKI_MENTN', 'discuss/$origin', '$mid', '', '', '$ip', '0')";
                                     $result = mysqli_query($conn, $sql);
                                 }
-    
+
                                 $i++;
                                 if($i > 20){ #안전장치
                                     break;
@@ -105,7 +105,7 @@
                 $id = $ip;
                 $name = $ip;
             }
-            
+
             $now = date('Y-m-d H:i:s');
             $num = filt($_POST['num'], '123');
             $content = filt($_POST['content'], 'oth');
@@ -167,7 +167,7 @@
     }
 
 //토론 불러오기
-    $sql = "SELECT * FROM `_discuss` WHERE `title` = '$fnwTitle' and `status` IN ('ACTIVE', 'PAUSE')";
+    $sql = "SELECT * FROM `_discuss` WHERE `title` = '$fnwTitle' and `status` IN ('ACTIVE', 'PAUSE') ORDER BY `status`";
     $discuss = mysqli_query($conn, $sql);
     if(mysqli_num_rows($discuss) < 1){
         unset($discuss);
@@ -226,16 +226,16 @@
                         $wE = $dThread['id'];
                         $sqln = "SELECT `name` FROM `_account` WHERE `id` = '$wE'";
                         $resultn = mysqli_query($conn, $sqln);
-                
+
                         if(mysqli_num_rows($resultn) < 1){
                             $name = $wE;
-                
+
                             $icon = 'invisible';
                             $href = '/misc%3EmanageCenter%3E'.$wE;
                         }else{
                             $name = mysqli_fetch_assoc($resultn);
                             $name = $name['name'];
-                
+
                             $icon = 'user-alt-7';
                             $href = '/u/'.$wE;
                         }
