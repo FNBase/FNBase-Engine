@@ -29,7 +29,7 @@
     $alNotice = $lsBoard['notice'];
     $boardOpt = $lsBoard['option'];
 
-    $notin = "('trash', 'frei', 'relaynovel', 'kkutu', 'apartmemt', 'arrow', 'mmaterial')";
+    $notin = "NOT IN ('trash', 'relaynovel', 'kkutu', 'arrow')";
 
     echo '<script>document.title = "'.$lsBoard['title'].'";isTitCh = true</script>'; #제목 변경
 
@@ -126,9 +126,9 @@
             case 'fresh':
                 $sql = "SELECT * FROM `_content` WHERE `actmeter` not like `at` and `actmeter` is not null ORDER BY `actmeter` DESC LIMIT $limit";
                 break;
-            
+
             default:
-                $sql = "SELECT * FROM `_content` WHERE `hideMain` IS NULL and `board` NOT IN $notin $sad ORDER BY `num` DESC LIMIT $limit";
+                $sql = "SELECT * FROM `_content` WHERE `hideMain` IS NULL $sad AND `board` IN (SELECT `slug` FROM `_board` WHERE `type` IN ('DIRECT_OPT', 'PRIVAT_OPT')) ORDER BY `num` DESC LIMIT $limit";
                 break;
         }
     }else{
@@ -204,7 +204,7 @@
                 $qPlus = '<span class="subInfo">댓글 검색은 내용 일치 여부만 봅니다.'.$sql_.'</span><br>';
                 $qT = '(댓글)';
                 break;
-            
+
             default:
                 $sql_ = "SELECT `num` FROM `_content` WHERE (`title` like '$ps$qS$ps' OR `content` like '$ps$qS$ps') AND (`staffOnly` IS NULL OR `staffOnly` like '$ps$name$ps' OR `id` = '$id') $spsp";
                 $sql = "SELECT * FROM `_content` WHERE (`title` like '$ps$qS$ps' OR `content` like '$ps$qS$ps') AND (`staffOnly` IS NULL OR `staffOnly` like '$ps$name$ps' OR `id` = '$id') $spsp ORDER BY `at` DESC LIMIT $l";
@@ -409,7 +409,6 @@
                                         var rt = "'.$edContent['rate'].'";
                                         var sel = document.getElementById("ratSel");
                                         var selOpt = sel.options;
-
                                         for (var opt, j = 0; opt = selOpt[j]; j++) {
                                             if (opt.value == rt) {
                                                 sel.selectedIndex = j;
@@ -433,7 +432,6 @@
                                 if($edContent){ echo '<script>
                                     var sO = "'.$edContent['staffOnly'].'";
                                     var user = "'.$_SESSION['fnUserName'].'";
-
                                         if(sO == ""){
                                             var public = true;
                                         }else if(sO == user){
@@ -449,7 +447,6 @@
                                         if(!public){
                                             var sel = document.getElementById("secSelect");
                                             var selOpt = sel.options;
-
                                             for (var opt, j = 0; opt = selOpt[j]; j++) {
                                                 if (opt.value == text) {
                                                     sel.selectedIndex = j;
@@ -504,13 +501,13 @@
                                     document.body.appendChild(dialog);
                                     dialog.id = "dialog";
                                     dialog.style.visibility = "hidden";
-                                    dialog.innerHTML = message; 
+                                    dialog.innerHTML = message;
                                     var left = document.body.clientWidth / 2 - dialog.clientWidth / 2;
                                     dialog.style.left = left + "px";
-                                    dialog.style.visibility = "visible";  
+                                    dialog.style.visibility = "visible";
                                     var shadow = document.createElement("div");
                                     document.body.appendChild(shadow);
-                                    shadow.id = "shadow";		
+                                    shadow.id = "shadow";
                                     //tip with setTimeout
                                     setTimeout(function () {
                                         document.body.removeChild(document.getElementById("dialog"));
@@ -748,9 +745,9 @@
                                 case 'whole':
                                     $sql = "SELECT COUNT(`num`) as `cnt` FROM `_content` WHERE `board` NOT IN ('trash')";
                                     break;
-                    
+
                                 default:
-                                    $sql = "SELECT COUNT(`num`) as `cnt` FROM `_content` WHERE `hideMain` IS NULL and `board` NOT IN $notin";
+                                    $sql = "SELECT COUNT(`num`) as `cnt` FROM `_content` WHERE `hideMain` IS NULL $sad AND `board` IN (SELECT `slug` FROM `_board` WHERE `type` IN ('DIRECT_OPT', 'PRIVAT_OPT'))";
                                     break;
                             }
                         }else{
@@ -825,7 +822,7 @@
             echo '</section>
             <aside class="hidMob" id="nofiSec">
                 <h-m style="position:absolute;right:2em;margin:9px;opacity:0.7">';
-        
+
         if($uS['hideAdv'] != 1 || $isLogged == FALSE){
             if(strlen($boardName) > 9){
                 $brbr = '<br>';
@@ -903,7 +900,7 @@
         if(strlen($kpr) > 0){
             $relArr = array_map('trim', explode(',', $kpr));
             foreach($relArr as $arr){
-                $sql = "SELECT `name` FROM `_board` WHERE `id` = '$arr'";
+                $sql = "SELECT `name` FROM `_account` WHERE `id` = '$arr'";
                 $result = mysqli_query($conn, $sql);
                 $result = mysqli_fetch_assoc($result);
                 $kprBoard .= '<a href="/u/'.$arr.'">@'.$result['name'].'</a> ';

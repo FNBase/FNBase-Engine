@@ -17,8 +17,10 @@
         $row = mysqli_fetch_assoc($result);
         if($row['wikiColor'] !== NULL){
             $tc = explode(',', $row['wikiColor']);
-            $fnPColor = '#'.$tc[0];
-            $fnSColor = '#'.$tc[1];
+            if(!empty($tc[0])){
+                $fnPColor = '#'.$tc[0];
+                $fnSColor = '#'.$tc[1];
+            }
         }
     }
 
@@ -229,7 +231,6 @@
                             $d = 1;
                             while($row = mysqli_fetch_assoc($result)){
                                 $wE = $row['id'];
-                                $hidden = $row['status'];
                                 $sqln = "SELECT `name` FROM `_account` WHERE `id` = '$wE'";
                                 $resultn = mysqli_query($conn, $sqln);
 
@@ -327,11 +328,6 @@
                                 echo '상위 문서 : <a href="/w/'.myUrlEncode($parStr).'">'.$parStr.'</a><hr style="margin-top:4px">';
                             }
                         }
-                        $sql = "SELECT * FROM `_discuss` WHERE `title` = '$fnwTitle' and `status` = 'ACTIVE'";
-                        $discuss = mysqli_query($conn, $sql);
-                        if (mysqli_num_rows($discuss) >= 1) {
-                          echo '<div style="border-width: 7px 1px 1px; border-style: solid; border-color: red gray gray; padding: 12px"><span class="size_p_2" style="font-weight: 700;">이 문서에서 토론이 진행 중입니다!</span><br>토론 중인 내용을 일방적으로 편집하지 마세요.</div>';
-                        }
                         $content = nl2br(documentRender($document['content']));
                         echo preg_replace('/<br( \/)*>\n<hr>/m', '<hr>', preg_replace('/(src="|<hr>)(.*)<br( \/)*>/m', '$1$2', preg_replace('/<\/h(\d)><br \/>/m', '</h$1>', $content)));
                         echo '</table>';
@@ -352,7 +348,7 @@
                                         echo '<script>alert("로그아웃 되었습니다.");history.back()</script>';
                                     }else{
                                         echo '<br><form method="post" action="/sub/login.php"><hr>
-                                            <label><input type="id" name="id" placeholder="아이디" style="border:0" required></label><hr>
+                                            <label><input type="text" name="id" placeholder="아이디" style="border:0" required></label><hr>
                                             <label><input type="password" name="pw" placeholder="비밀번호" style="border:0" required></label>
                                             <input type="hidden" name="from" value="<?=$idPath?>"><hr>
                                             <a href="/forgot_password">비밀번호를 잊으셨나요?</a>
@@ -946,8 +942,8 @@
                     </header>
                     <form method="post" action="/sub/wikiOpt.php">
                         <section class="content">
-                            <label><input name="topColor" placeholder="상단바 색상 (hex)" class="pcwidth" value="#49ad78" required></label><br>
-                            <label><input name="seaColor" placeholder="검색창 색상 (hex)" class="pcwidth" value="#59d697" required></label><hr>
+                            <label><input name="topColor" placeholder="상단바 색상 (hex)" class="pcwidth" value="<?=$fnPColor?>" required></label><br>
+                            <label><input name="seaColor" placeholder="검색창 색상 (hex)" class="pcwidth" value="<?=$fnSColor?>" required></label><hr>
                             <!--<label>
                                 <input type="checkbox" name="disrespect"<--?=$disRedi?>>
                                 <span class="checkable">준비중</span>

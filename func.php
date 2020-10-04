@@ -12,7 +12,7 @@ function filt($arg, $opt){
         $re = '/[^0-9]+/m';
         $val = preg_replace($re, '', $arg);
     }elseif($opt == '영한'){ #영어, 숫자, 한글만
-        $re = '/[^a-zA-Z0-9ㄱ-ㅎ가-힣_]+/m';
+        $re = '/[^a-zA-Z0-9ㄱ-ㅎ가-힣_ ]+/m';
         $val = preg_replace($re, '', $arg);
     }elseif($opt == 'mail'){ #영어, 숫자, 한글만
         $re = '/[^a-zA-Z0-9@._-]+/m';
@@ -30,19 +30,19 @@ function filt($arg, $opt){
 }
 
 function GenStr($length){
-    $characters  = "0123456789";  
-    $characters .= "abcdefghijklmnopqrstuvwxyz";  
+    $characters  = "0123456789";
+    $characters .= "abcdefghijklmnopqrstuvwxyz";
     $characters .= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      
-    $string_generated = "";  
-      
-    $nmr_loops = $length;  
-    while ($nmr_loops--)  
-    {  
-        $string_generated .= $characters[mt_rand(0, strlen($characters) - 1)];  
-    }  
-      
-    return $string_generated;  
+
+    $string_generated = "";
+
+    $nmr_loops = $length;
+    while ($nmr_loops--)
+    {
+        $string_generated .= $characters[mt_rand(0, strlen($characters) - 1)];
+    }
+
+    return $string_generated;
 }
 
 function get_gravatar( $email, $s = 56, $d = 'identicon', $r = 'pg', $img = false, $atts = array() ) {
@@ -61,16 +61,16 @@ function get_gravatar( $email, $s = 56, $d = 'identicon', $r = 'pg', $img = fals
 function get_timeFlies($arg){
     $now_time = date('Y-m-d H:i:s');
     $time_check = strtotime($now_time) - strtotime($arg);
-                        
+
     $total_time = $time_check;
-    
+
     $days = floor($total_time/86400);
     $time = $total_time - ($days*86400);
     $hours = floor($time/3600);
     $time = $time - ($hours*3600);
     $min = floor($time/60);
     $sec = $time - ($min*60);
-    
+
     if($days == 0 && $hours == 0 && $min == 0){
         $val = $sec.'초 전';
     }elseif($days == 0 && $hours == 0){

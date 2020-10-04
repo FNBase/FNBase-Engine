@@ -167,7 +167,7 @@
     }
 
 //토론 불러오기
-    $sql = "SELECT * FROM `_discuss` WHERE `title` = '$fnwTitle' and `status` IN ('ACTIVE', 'PAUSE') ORDER BY `status`";
+    $sql = "SELECT * FROM `_discuss` WHERE `title` = '$fnwTitle' and `status` IN ('ACTIVE', 'PAUSE') ORDER BY `status` ORDER BY `status`, `lastEdit` LIMIT 200";
     $discuss = mysqli_query($conn, $sql);
     if(mysqli_num_rows($discuss) < 1){
         unset($discuss);
@@ -187,7 +187,7 @@
         </div>');
     }
 
-    $sql = "SELECT count(*) as `cnt` FROM `_discuss` WHERE `title` = '$fnwTitle' and `status` IN ('ACTIVE', 'PAUSE') ORDER BY `lastEdit` LIMIT 50";
+    $sql = "SELECT count(*) as `cnt` FROM `_discuss` WHERE `title` = '$fnwTitle' and `status` IN ('ACTIVE', 'PAUSE') ORDER BY `status`, `lastEdit` LIMIT 50";
     $result = mysqli_query($conn, $sql);
     $count = mysqli_fetch_assoc($result);
     $_SESSION['tempWTitle'] = $fnwTitle;

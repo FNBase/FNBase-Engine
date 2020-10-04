@@ -54,7 +54,7 @@ if($_GET['miscmode'] !== 'board'){
                         $result = mysqli_query($conn, $sql);
                         $i = 1;
                         while($row = mysqli_fetch_assoc($result)){
-                            
+
                             if(strlen($row['userIntro']) > 100){
                                 $cont = mb_substr($row['userIntro'], 0, 96).'..';
                             }else{
@@ -84,7 +84,7 @@ if($_GET['miscmode'] !== 'board'){
                         $sql = "SELECT `id`, `name`, `userIntro` FROM `_account` WHERE `siteBan` > 0 ORDER BY `at` DESC LIMIT 100";
                         $result = mysqli_query($conn, $sql);
                         while($row = mysqli_fetch_assoc($result)){
-                            
+
                             if(strlen($row['userIntro']) > 100){
                                 $cont = mb_substr($row['userIntro'], 0, 96).'..';
                             }else{
@@ -132,7 +132,7 @@ if($_GET['miscmode'] !== 'board'){
                         $sql = "SELECT * FROM `_ad` WHERE `type` = 'USER_ADVER' and `at` > DATE_SUB(NOW(), INTERVAL 30 DAY) GROUP BY `ad` ORDER BY `at` DESC LIMIT 30";
                         $result = mysqli_query($conn, $sql);
                         while($row = mysqli_fetch_assoc($result)){
-                            
+
                             if(strlen($row['ad']) > 100){
                                 $cont = mb_substr($row['ad'], 0, 96).'..';
                             }else{
@@ -156,7 +156,7 @@ if($_GET['miscmode'] !== 'board'){
                         $sql = "SELECT * FROM `_ad` WHERE `type` = 'PUB_S_ADVT' and `at` > DATE_SUB(NOW(), INTERVAL 30 DAY) GROUP BY `ad` ORDER BY `at` DESC LIMIT 30";
                         $result = mysqli_query($conn, $sql);
                         while($row = mysqli_fetch_assoc($result)){
-                            
+
                             if(strlen($row['ad']) > 100){
                                 $cont = mb_substr($row['ad'], 0, 96).'..';
                             }else{
@@ -282,7 +282,7 @@ if($_GET['miscmode'] !== 'board'){
                         $sql = "SELECT `id`, `name`, `value`, `reason` FROM `_othFunc` WHERE `type` = 'VINDICATE_' ORDER BY `at` DESC LIMIT 20";
                         $result = mysqli_query($conn, $sql);
                         while($row = mysqli_fetch_assoc($result)){
-                            
+
                             if(strlen($row['reason']) > 250){
                                 $cont = mb_substr($row['reason'], 0, 248).'..';
                             }else{
@@ -409,7 +409,7 @@ if($_GET['miscmode'] !== 'board'){
                         <p>과도한 도박은 심각한 부작용을 초래할 수 있습니다.</p>
                         <label for="game_warning" class="close">×</a>
                     </article>';
-                
+
                 $sql = "SELECT * FROM `_othFunc` WHERE `at` > curdate() and `type` = 'READYSHOOT' and `id` = '$id'";
                 $result = mysqli_query($conn, $sql);
                 if(mysqli_num_rows($result) === 0){
@@ -502,7 +502,7 @@ if($_GET['miscmode'] !== 'board'){
                 $boardType = $lsBoard['type'];
                 $lsNotice = $lsBoard['subIntro'];
                 $alNotice = $lsBoard['notice'];
-            
+
                 if(!empty($lsBoard['icon']) and $lsBoard['icon'] != '0'){
                     $boardIcon = '<i class="icofont-'.$lsBoard['icon'].'"></i> ';
                 }
@@ -513,7 +513,7 @@ if($_GET['miscmode'] !== 'board'){
                         $tgName = filt($_GET['tagsname'], '영한');
                         $sqlW = "WHERE `board` = '$board' and `category` = '$tgName'";
                         break;
-                    
+
                     default:
                         $tgName = '없음';
                         $sqlW = "WHERE `board` = '$board'";
@@ -603,9 +603,9 @@ if($_GET['miscmode'] !== 'board'){
                     <input type="file" name="myfile">
                     <br>
                     <span class="subInfo">".png, .jpg/.jpeg, .webp" 파일만 업로드 가능합니다.</span><br>
-                    <span class="subInfo">1MB 이하로 올려주세요.</span>
+                    <span class="subInfo">2MB 미만으로 올려주세요.</span>
                     <input type="submit" style="width:100%" value="업로드하기">
-                    <span class="subInfo">1MB 이상이거나, 지원하지 않는 파일 형식인가요?.</span>
+                    <span class="subInfo">2MB를 초과하거나, 지원하지 않는 파일 형식인가요?.</span>
                     <a href="https://ko.imgbb.com/" class="button" style="background:green;width:100%">imgBB 사용</a>
                     <br>
                 <br>
@@ -715,7 +715,7 @@ if($_GET['miscmode'] !== 'board'){
                                         </script>
                                 <?php
                 break;
-                
+
             default:
                 echo '<hr>&nbsp;<a href="/misc" class="lager"><i class="icofont-interface"></i> 기타 페이지</a><br>
                 &nbsp;<span class="subInfo">계속 추가될 예정입니다. 필요하신게 있다면 <a href="/b>maint">운영실</a>에서 건의해주세요.</span><hr>

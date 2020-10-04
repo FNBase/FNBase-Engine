@@ -93,7 +93,7 @@ if(mysqli_num_rows($result) > 0){
             $cnt = $res['cnt'] - 1;
             $n = mt_rand(0, $cnt);
             $tnLabel = '추천';
-    
+
             if($cnt < 0){
                 $isEmpty = TRUE;
             }else{
@@ -112,7 +112,7 @@ if(mysqli_num_rows($result) > 0){
             $cnt = $res['cnt'] - 1;
             $n = mt_rand(0, $cnt);
             $tnLabel = '인기';
-    
+
             if($cnt < 0){
                 $isEmpty = TRUE;
             }else{
@@ -131,20 +131,20 @@ if(mysqli_num_rows($result) > 0){
             $cnt = $res['cnt'] - 1;
             $n = mt_rand(0, $cnt);
             $tnLabel = '광고';
-    
+
             if($cnt < 0){
                 $isEmpty = TRUE;
             }else{
                 $sql = "SELECT `ad`, `link` FROM `_ad` WHERE `at` > DATE_SUB(NOW(), INTERVAL 3 DAY) and `type` = 'USER_ADVER' and `ad` IS NOT NULL GROUP BY `ad` ORDER BY `at` DESC LIMIT $n, 1";
                 $res = mysqli_query($conn, $sql);
                 $res = mysqli_fetch_assoc($res);
-    
+
                     $tnHref = $res['link'];
                     $tnText = $res['ad'];
             }
     }
     if($isEmpty){
-        $sql = "SELECT COUNT(*) as `cnt` FROM `_ad` WHERE `at` > DATE_SUB(NOW(), INTERVAL 30 DAY) and `type` = 'PUB_S_ADVT'";
+        $sql = "SELECT COUNT(*) as `cnt` FROM `_ad` WHERE `at` > DATE_SUB(NOW(), INTERVAL 14 DAY) and `type` = 'PUB_S_ADVT'";
         $res = mysqli_query($conn, $sql);
         $res = mysqli_fetch_assoc($res);
         $cnt = $res['cnt'] - 1;
@@ -154,10 +154,10 @@ if(mysqli_num_rows($result) > 0){
         if($cnt < 0){
             $isEmpty = TRUE;
         }else{
-            $sql = "SELECT `ad`, `link` FROM `_ad` WHERE `at` > DATE_SUB(NOW(), INTERVAL 30 DAY) and `type` = 'PUB_S_ADVT' and `ad` IS NOT NULL ORDER BY `at` DESC LIMIT $n, 1";
+            $sql = "SELECT `ad`, `link` FROM `_ad` WHERE `at` > DATE_SUB(NOW(), INTERVAL 14 DAY) and `type` = 'PUB_S_ADVT' and `ad` IS NOT NULL ORDER BY `at` DESC LIMIT $n, 1";
             $res = mysqli_query($conn, $sql);
             $res = mysqli_fetch_assoc($res);
-    
+
                 $tnHref = $res['link'];
                 $tnText = $res['ad'];
         }
@@ -173,12 +173,12 @@ if(mysqli_num_rows($result) > 0){
         <meta name="classification" content="html">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
         <!-- 정보 -->
         <title><?=$fnTitle?></title>
         <meta name="description" content="<?=$fnDesc?>">
         <meta property="og:type" content="website">
-    
+
         <!-- 불러오기 -->
         <style>
             @media (min-width: 300px) and (max-width: 1800px) {
@@ -285,7 +285,7 @@ if(mysqli_num_rows($result) > 0){
                 case 'comment':
                     include 'comment.php';
                     break;
-                
+
                 #직접표시
                 case 'login':
                     if(!empty($_SESSION['fnUserId']) and $_SESSION['fnUserId'] != '0'){
@@ -297,12 +297,12 @@ if(mysqli_num_rows($result) > 0){
                     </header>
                     <form method="post" action="/login.php">
                         <section class="content">
-                            <label><input type="id" name="id" placeholder="아이디" required></label><br>
+                            <label><input type="text" name="id" placeholder="아이디" required></label><br>
                             <label><input type="password" name="pw" placeholder="비밀번호" required></label>
                             <input type="hidden" name="from" value="/2/">
                         </section>
                         <footer>
-                            <a href="/forgot_password">비밀번호를 잊으셨나요?</a> 
+                            <a href="/forgot_password">비밀번호를 잊으셨나요?</a>
                             <a href="/php/ip_login.php" style="float:right"><i class="icofont-checked"></i> ip 로그인</a>
                             <button class="button success full" type="submit">로그인</button>
                             <span class="subInfo">계정이 없으신가요? <a href="/register">만들어보세요!</a></span>
@@ -325,7 +325,7 @@ if(mysqli_num_rows($result) > 0){
                                     die('권한 없음.');
                                 }
                             }
-                    
+
                     $sql = "SELECT * FROM `_board` WHERE `slug` = '$lsBoard'";
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
@@ -447,7 +447,7 @@ if(mysqli_num_rows($result) > 0){
                     }elseif($uS['editor'] == 'q'){
                         $lsEditor = '<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
                         <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-                        
+
                         <div id="editor" style="height:15em;font-size:1em"></div>
                         <textarea id="txtAreaEditor" name="content" style="display:none"></textarea>
                         '."
@@ -480,7 +480,6 @@ if(mysqli_num_rows($result) > 0){
                         <button id="submitImage" class="full" type="button">이미지 업로드</button></form>'.
                         "<script>
                         const button = document.querySelector('#submitImage');
-
                         button.addEventListener('click', () => {
                         const form = new FormData(document.querySelector('#contentImage'));
                         const url = '/sub/fetchUpload.php'
@@ -491,14 +490,14 @@ if(mysqli_num_rows($result) > 0){
                         var imgSrc = null;
                         fetch(request)
                             .then(response => response.text())
-                            .then(data => { 
+                            .then(data => {
                                 if(document.querySelector('#mainEditor') != null){
                                     document.querySelector('#mainEditor').innerHTML += data+' ';
                                 }else{
                                     ".$lsEditorPlusV."
                                 }
                             })
-                            
+
                         });
                         </script><hr>
                         ";
@@ -588,7 +587,7 @@ if(mysqli_num_rows($result) > 0){
                     }elseif($uS['editor'] == 'q'){
                         $lsEditor = '<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
                         <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-                        
+
                         <div id="editor" style="height:15em;font-size:1em">'.$edContent['content'].'</div>
                         <textarea id="txtAreaEditor" name="content" style="display:none"></textarea>
                         '."
@@ -621,7 +620,6 @@ if(mysqli_num_rows($result) > 0){
                         <button id="submitImage" class="full" type="button">이미지 업로드</button></form>'.
                         "<script>
                         const button = document.querySelector('#submitImage');
-
                         button.addEventListener('click', () => {
                         const form = new FormData(document.querySelector('#contentImage'));
                         const url = '/sub/fetchUpload.php'
@@ -632,14 +630,14 @@ if(mysqli_num_rows($result) > 0){
                         var imgSrc = null;
                         fetch(request)
                             .then(response => response.text())
-                            .then(data => { 
+                            .then(data => {
                                 if(document.querySelector('#mainEditor') != null){
                                     document.querySelector('#mainEditor').innerHTML += data+' ';
                                 }else{
                                     $lsEditorPlusV
                                 }
                             })
-                            
+
                         });
                         </script><hr>
                         ";
@@ -708,7 +706,7 @@ if(mysqli_num_rows($result) > 0){
                     <form method="post" action="/php/find_password.php">
                         <section class="content">
                             <label><input type="email" name="mail" placeholder="이메일 주소" required></label><br>
-                            <label><input type="id" name="id" placeholder="아이디" required></label>
+                            <label><input type="text" name="id" placeholder="아이디" required></label>
                         </section>
                         <footer>
                             <button class="button full" type="submit">메일 보내기</button>
@@ -758,7 +756,7 @@ if(mysqli_num_rows($result) > 0){
                         보유 포인트 <blue>'.$uIrow['point'].'</blue><br>
                         가입 '.$uIrow['at'].' / 마지막 접속 '.$lL['at'].'</span>
                     ';
-                    
+
                     $sql = "SELECT `num`, `title`, `at`, `board`, `commentCount` FROM `_content` WHERE `id` = '$uid' ORDER BY `num` DESC LIMIT 10";
                     $result = mysqli_query($conn, $sql);
                     if(mysqli_num_rows($result) != 0){
@@ -784,7 +782,7 @@ if(mysqli_num_rows($result) > 0){
                         if($iA['isAdmin']){
                             $isAdmin = TRUE;
                         }
-                
+
                     if($uid == $_SESSION['fnUserId'] or $isAdmin){
                         $sql = "SELECT * FROM `_comment` WHERE `id` = '$uid' ORDER BY `num` DESC LIMIT 10";
                         $result = mysqli_query($conn, $sql);
@@ -971,7 +969,7 @@ if(mysqli_num_rows($result) > 0){
                                             break;
                                         case 'CREAT_SOME':
                                             $boardType = '창작';
-                                            break;    
+                                            break;
                                     }
                                             echo '<tr>
                                                 <td>'.$boardType.'</td>
@@ -1166,7 +1164,7 @@ if(mysqli_num_rows($result) > 0){
                                                     $boardType = '자동';
                                                     break;
                                             }
-                
+
                                             echo '<tr>';
                                             echo '<td class="hidMob">'.$boardType.'</td>';
                                             echo '<td class="black"><a href="/b/'.$row['slug'].'">'.$row['title'].'</a></td>';
@@ -1249,7 +1247,7 @@ if(mysqli_num_rows($result) > 0){
                                         $result = mysqli_query($conn, $sql);
                                         while($pgContent = mysqli_fetch_assoc($result)){ #구독 글 조회
                                             $time = get_timeFlies($row['at']);
-                
+
                                             echo '<tr>';
                                                     $vc = $pgContent['viewCount'];
                                                     $uv = $pgContent['voteCount_Up'];
@@ -1389,7 +1387,7 @@ if(mysqli_num_rows($result) > 0){
                                                     }else{
                                                         echo '<a class="muted" href="/u/'.$row['id'].'"><i class="icofont-user-alt-7"></i> ';
                                                     }
-                                                    
+
                                                     echo $row['name'].'</a> / '.get_timeFlies($row['at']).'
                                                 </header>
                                                 <section>
@@ -1471,7 +1469,7 @@ if(mysqli_num_rows($result) > 0){
                                                     }else{
                                                         echo '<a class="muted" href="/u/'.$row['id'].'"><i class="icofont-user-alt-7"></i> ';
                                                     }
-                                                    
+
                                                     echo $row['name'].'</a> / '.get_timeFlies($row['at']).' / <a href="/emoticon>'.$row['folder'].'">이모티콘 전체 보기</a>
                                                 </header>
                                                 <section>
@@ -1630,6 +1628,7 @@ if(mysqli_num_rows($result) > 0){
                             <button class="button full" type="submit">게시판 개설</button>
                             <span class="subInfo">등록시 5000 포인트가 소모되며, 게시판 이용 수칙을 등록하셔야 합니다.</span><br>
                             <span class="subInfo">게시판 개설시, <a href="/b%3Emaint%3E213">사설 게시판 관리 서비스 이용 수칙</a>에 동의한 것으로 간주됩니다.</span>
+                            <br><b>꼭 필요한 게시판인지 다시 한 번 확인해주세요.</b>
                         </footer>
                     </form>
                     </article>';
@@ -1682,7 +1681,7 @@ if(mysqli_num_rows($result) > 0){
             <?=$fnTitle?> 계정이 없으시다면 가입해보세요! 3분도 채 걸리지 않습니다.
             </section>
             <footer>
-            <a class="button" style="color: #fff;background-color: #6633FF;" href="/register">회원가입</a> 
+            <a class="button" style="color: #fff;background-color: #6633FF;" href="/register">회원가입</a>
             <a href="/login" style="float:right" class="button">로그인</a>
             </footer>
         </article>

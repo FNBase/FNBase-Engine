@@ -23,12 +23,12 @@ if(!empty($_FILES['myfile']) and $_FILES['myfile'] != '0'){
 // 설정
 $uploads_dir = '../upload';
 $allowed_ext = array('jpg','jpeg','png','webp', 'JPG', 'PNG');
- 
+
 // 변수 정리
 $error = $_FILES['myfile']['error'];
 $name = $_FILES['myfile']['name'];
 $ext = array_pop(explode('.', $name));
- 
+
 // 오류 확인
 if( $error != UPLOAD_ERR_OK ) {
 	switch( $error ) {
@@ -57,6 +57,6 @@ $sql = "INSERT INTO `_upload` (`filename`, `at`, `ip`) VALUES ('$date$name', CUR
 $result = mysqli_query($conn, $sql);
 $name = str_ireplace(' ', '%20', $name);
 // 파일 정보 출력
-echo '/upload/'.$date.$name;
+echo $fnPath.'/upload/'.$date.$name;
 }
 ?>
