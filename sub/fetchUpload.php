@@ -57,6 +57,6 @@ $sql = "INSERT INTO `_upload` (`filename`, `at`, `ip`) VALUES ('$date$name', CUR
 $result = mysqli_query($conn, $sql);
 $name = str_ireplace(' ', '%20', $name);
 // 파일 정보 출력
-echo '/upload/'.$date.$name;
+echo $fnPath.'/upload/'.$date.$name;
 }
 ?>

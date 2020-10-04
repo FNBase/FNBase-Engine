@@ -29,7 +29,7 @@
     $alNotice = $lsBoard['notice'];
     $boardOpt = $lsBoard['option'];
 
-    $notin = "('trash', 'frei', 'relaynovel', 'kkutu', 'apartmemt', 'arrow', 'mmaterial')";
+    $notin = "NOT IN ('trash', 'relaynovel', 'kkutu', 'arrow')";
 
     echo '<script>document.title = "'.$lsBoard['title'].'";isTitCh = true</script>'; #제목 변경
 
@@ -128,7 +128,7 @@
                 break;
             
             default:
-                $sql = "SELECT * FROM `_content` WHERE `hideMain` IS NULL and `board` NOT IN $notin $sad ORDER BY `num` DESC LIMIT $limit";
+                $sql = "SELECT * FROM `_content` WHERE `hideMain` IS NULL $sad AND `board` IN (SELECT `slug` FROM `_board` WHERE `type` IN ('DIRECT_OPT', 'PRIVAT_OPT')) ORDER BY `num` DESC LIMIT $limit";
                 break;
         }
     }else{
@@ -750,7 +750,7 @@
                                     break;
                     
                                 default:
-                                    $sql = "SELECT COUNT(`num`) as `cnt` FROM `_content` WHERE `hideMain` IS NULL and `board` NOT IN $notin";
+                                    $sql = "SELECT COUNT(`num`) as `cnt` FROM `_content` WHERE `hideMain` IS NULL $sad AND `board` IN (SELECT `slug` FROM `_board` WHERE `type` IN ('DIRECT_OPT', 'PRIVAT_OPT'))";
                                     break;
                             }
                         }else{
@@ -903,7 +903,7 @@
         if(strlen($kpr) > 0){
             $relArr = array_map('trim', explode(',', $kpr));
             foreach($relArr as $arr){
-                $sql = "SELECT `name` FROM `_board` WHERE `id` = '$arr'";
+                $sql = "SELECT `name` FROM `_account` WHERE `id` = '$arr'";
                 $result = mysqli_query($conn, $sql);
                 $result = mysqli_fetch_assoc($result);
                 $kprBoard .= '<a href="/u/'.$arr.'">@'.$result['name'].'</a> ';

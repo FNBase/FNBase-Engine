@@ -17,8 +17,10 @@
         $row = mysqli_fetch_assoc($result);
         if($row['wikiColor'] !== NULL){
             $tc = explode(',', $row['wikiColor']);
-            $fnPColor = '#'.$tc[0];
-            $fnSColor = '#'.$tc[1];
+            if(!empty($tc[0])){
+                $fnPColor = '#'.$tc[0];
+                $fnSColor = '#'.$tc[1];
+            }
         }
     }
 
@@ -351,7 +353,7 @@
                                         echo '<script>alert("로그아웃 되었습니다.");history.back()</script>';
                                     }else{
                                         echo '<br><form method="post" action="/sub/login.php"><hr>
-                                            <label><input type="id" name="id" placeholder="아이디" style="border:0" required></label><hr>
+                                            <label><input type="text" name="id" placeholder="아이디" style="border:0" required></label><hr>
                                             <label><input type="password" name="pw" placeholder="비밀번호" style="border:0" required></label>
                                             <input type="hidden" name="from" value="<?=$idPath?>"><hr>
                                             <a href="/forgot_password">비밀번호를 잊으셨나요?</a>
@@ -945,8 +947,8 @@
                     </header>
                     <form method="post" action="/sub/wikiOpt.php">
                         <section class="content">
-                            <label><input name="topColor" placeholder="상단바 색상 (hex)" class="pcwidth" value="#49ad78" required></label><br>
-                            <label><input name="seaColor" placeholder="검색창 색상 (hex)" class="pcwidth" value="#59d697" required></label><hr>
+                            <label><input name="topColor" placeholder="상단바 색상 (hex)" class="pcwidth" value="<?=$fnPColor?>" required></label><br>
+                            <label><input name="seaColor" placeholder="검색창 색상 (hex)" class="pcwidth" value="<?=$fnSColor?>" required></label><hr>
                             <!--<label>
                                 <input type="checkbox" name="disrespect"<--?=$disRedi?>>
                                 <span class="checkable">준비중</span>

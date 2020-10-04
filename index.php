@@ -144,7 +144,7 @@ if(mysqli_num_rows($result) > 0){
             }
     }
     if($isEmpty){
-        $sql = "SELECT COUNT(*) as `cnt` FROM `_ad` WHERE `at` > DATE_SUB(NOW(), INTERVAL 30 DAY) and `type` = 'PUB_S_ADVT'";
+        $sql = "SELECT COUNT(*) as `cnt` FROM `_ad` WHERE `at` > DATE_SUB(NOW(), INTERVAL 14 DAY) and `type` = 'PUB_S_ADVT'";
         $res = mysqli_query($conn, $sql);
         $res = mysqli_fetch_assoc($res);
         $cnt = $res['cnt'] - 1;
@@ -154,7 +154,7 @@ if(mysqli_num_rows($result) > 0){
         if($cnt < 0){
             $isEmpty = TRUE;
         }else{
-            $sql = "SELECT `ad`, `link` FROM `_ad` WHERE `at` > DATE_SUB(NOW(), INTERVAL 30 DAY) and `type` = 'PUB_S_ADVT' and `ad` IS NOT NULL ORDER BY `at` DESC LIMIT $n, 1";
+            $sql = "SELECT `ad`, `link` FROM `_ad` WHERE `at` > DATE_SUB(NOW(), INTERVAL 14 DAY) and `type` = 'PUB_S_ADVT' and `ad` IS NOT NULL ORDER BY `at` DESC LIMIT $n, 1";
             $res = mysqli_query($conn, $sql);
             $res = mysqli_fetch_assoc($res);
     
@@ -297,7 +297,7 @@ if(mysqli_num_rows($result) > 0){
                     </header>
                     <form method="post" action="/login.php">
                         <section class="content">
-                            <label><input type="id" name="id" placeholder="아이디" required></label><br>
+                            <label><input type="text" name="id" placeholder="아이디" required></label><br>
                             <label><input type="password" name="pw" placeholder="비밀번호" required></label>
                             <input type="hidden" name="from" value="/2/">
                         </section>
@@ -708,7 +708,7 @@ if(mysqli_num_rows($result) > 0){
                     <form method="post" action="/php/find_password.php">
                         <section class="content">
                             <label><input type="email" name="mail" placeholder="이메일 주소" required></label><br>
-                            <label><input type="id" name="id" placeholder="아이디" required></label>
+                            <label><input type="text" name="id" placeholder="아이디" required></label>
                         </section>
                         <footer>
                             <button class="button full" type="submit">메일 보내기</button>
@@ -1630,6 +1630,7 @@ if(mysqli_num_rows($result) > 0){
                             <button class="button full" type="submit">게시판 개설</button>
                             <span class="subInfo">등록시 5000 포인트가 소모되며, 게시판 이용 수칙을 등록하셔야 합니다.</span><br>
                             <span class="subInfo">게시판 개설시, <a href="/b%3Emaint%3E213">사설 게시판 관리 서비스 이용 수칙</a>에 동의한 것으로 간주됩니다.</span>
+                            <br><b>꼭 필요한 게시판인지 다시 한 번 확인해주세요.</b>
                         </footer>
                     </form>
                     </article>';

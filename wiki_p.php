@@ -193,7 +193,7 @@
 
             $doc = preg_replace("/\[\[(이미지|사진|파일):([^\[]+\.(png|jpg|jpeg|gif|svg|webp))\]\]/mu", '<img style="max-width:100%" src="$2">', $doc);
             $doc = preg_replace("/\[\[(이미지|사진|파일):([^\[]+\.(png|jpg|jpeg|gif|svg|webp))\|\]\]/mu", '<img style="width:100%" src="$2">', $doc);
-            $doc = preg_replace("/\[\[(이미지|사진|파일):([^\[]+\.(png|jpg|jpeg|gif|svg|webp))\|([0-9a-z%]+)\]\]/mu", '<img class="center" style="width:$3" src="$2">', $doc);
+            $doc = preg_replace("/\[\[(이미지|사진|파일):([^\[]+\.(png|jpg|jpeg|gif|svg|webp))\|([0-9a-z-:;%]+)\]\]/mu", '<img class="center" style="width:$4" src="$2">', $doc);
 
             $doc = preg_replace("/\[\[(비디오|동영상):([^\[]+\.(mp4|avi|mkv|mov|wmv|ogg|flv|webm))\]\]/mu", '<video height="240" style="max-width:100%" src="$2" preload="metadata" controls>', $doc);
             $doc = preg_replace("/\[\[(비디오|동영상):([^\[]+\.(mp4|avi|mkv|mov|wmv|ogg|flv|webm))\|([0-9a-z%]+)\]\]/mu", '<video height="$3" style="max-width:100%" src="$2" preload="metadata" controls>', $doc);

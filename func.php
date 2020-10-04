@@ -12,7 +12,7 @@ function filt($arg, $opt){
         $re = '/[^0-9]+/m';
         $val = preg_replace($re, '', $arg);
     }elseif($opt == '영한'){ #영어, 숫자, 한글만
-        $re = '/[^a-zA-Z0-9ㄱ-ㅎ가-힣_]+/m';
+        $re = '/[^a-zA-Z0-9ㄱ-ㅎ가-힣_ ]+/m';
         $val = preg_replace($re, '', $arg);
     }elseif($opt == 'mail'){ #영어, 숫자, 한글만
         $re = '/[^a-zA-Z0-9@._-]+/m';

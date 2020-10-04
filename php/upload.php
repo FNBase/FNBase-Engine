@@ -49,7 +49,7 @@ if(!in_array($ext, $allowed_ext) ) {
 	die('<script>alert(".png, .jpg/.jpeg, .webp 파일만 올려주세요.");history.back();</script>');
 }
 if($_FILES['myfile']['size'] > 2e+6){
-    die('<script>alert("이미지의 크기를 1MB 이하로 줄이세요.");history.back();</script>');
+    die('<script>alert("이미지의 크기를 2MB 미만으로로 줄이세요.");history.back();</script>');
 }
 // 파일 이동
 move_uploaded_file($_FILES['myfile']['tmp_name'], "$uploads_dir/$date$name");
@@ -101,7 +101,7 @@ echo '<!-- FNBase Engine 2 -->
 	<ul>
 		<li>파일명: '.$date.$name.'</li>
 		<li>확장자: '.$ext.'</li>
-		<li>주소 복사: <input readonly id="imgsrc" value="/upload/'.$date.$name.'"></li>
+		<li>주소 복사: <input readonly id="imgsrc" value="'.$fnPath.'/upload/'.$date.$name.'"></li>
 	</ul>
 	<button class="full" onclick="copy_to_clipboard()">복사</button>
 		<img style="max-width:100%" src="../upload/'.$date.$name.'">

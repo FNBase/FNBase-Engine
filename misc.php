@@ -603,9 +603,9 @@ if($_GET['miscmode'] !== 'board'){
                     <input type="file" name="myfile">
                     <br>
                     <span class="subInfo">".png, .jpg/.jpeg, .webp" 파일만 업로드 가능합니다.</span><br>
-                    <span class="subInfo">1MB 이하로 올려주세요.</span>
+                    <span class="subInfo">2MB 미만으로 올려주세요.</span>
                     <input type="submit" style="width:100%" value="업로드하기">
-                    <span class="subInfo">1MB 이상이거나, 지원하지 않는 파일 형식인가요?.</span>
+                    <span class="subInfo">2MB를 초과하거나, 지원하지 않는 파일 형식인가요?.</span>
                     <a href="https://ko.imgbb.com/" class="button" style="background:green;width:100%">imgBB 사용</a>
                     <br>
                 <br>
