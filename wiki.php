@@ -328,6 +328,11 @@
                                 echo '상위 문서 : <a href="/w/'.myUrlEncode($parStr).'">'.$parStr.'</a><hr style="margin-top:4px">';
                             }
                         }
+                        $sql = "SELECT * FROM `_discuss` WHERE `title` = '$fnwTitle' and `status` = 'ACTIVE'";
+                        $discuss = mysqli_query($conn, $sql);
+                        if (mysqli_num_rows($discuss) >= 1) {
+                          echo '<div style="border-width: 7px 1px 1px; border-style: solid; border-color: red gray gray; padding: 12px"><span class="size_p_2" style="font-weight: 700;">이 문서에서 토론이 진행 중입니다!</span><br>토론 중인 내용을 일방적으로 편집하지 마세요.</div>';
+                        }
                         $content = nl2br(documentRender($document['content']));
                         echo preg_replace('/<br( \/)*>\n<hr>/m', '<hr>', preg_replace('/(src="|<hr>)(.*)<br( \/)*>/m', '$1$2', preg_replace('/<\/h(\d)><br \/>/m', '</h$1>', $content)));
                         echo '</table>';

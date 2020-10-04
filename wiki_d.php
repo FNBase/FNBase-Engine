@@ -167,7 +167,7 @@
     }
 
 //토론 불러오기
-    $sql = "SELECT * FROM `_discuss` WHERE `title` = '$fnwTitle' and `status` IN ('ACTIVE', 'PAUSE') ORDER BY `status` ORDER BY `status`, `lastEdit` LIMIT 200";
+    $sql = "SELECT * FROM `_discuss` WHERE `title` = '$fnwTitle' and `status` IN ('ACTIVE', 'PAUSE') ORDER BY `status`, `lastEdit` LIMIT 200";
     $discuss = mysqli_query($conn, $sql);
     if(mysqli_num_rows($discuss) < 1){
         unset($discuss);
