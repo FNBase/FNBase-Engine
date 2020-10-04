@@ -229,6 +229,7 @@
                             $d = 1;
                             while($row = mysqli_fetch_assoc($result)){
                                 $wE = $row['id'];
+                                $hidden = $row['status'];
                                 $sqln = "SELECT `name` FROM `_account` WHERE `id` = '$wE'";
                                 $resultn = mysqli_query($conn, $sqln);
 

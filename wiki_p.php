@@ -12,7 +12,8 @@
         return urldecode(preg_replace('/(&|%2526)(amp(%253B|;))+(apos|quot)(%253B|;)/', "&$4;", str_ireplace('%2F', '/', str_replace($replacements, $entities, $string))));
     }
 
-    function documentRender($doc, $isTitle = FALSE, $isIncluded = FALSE){
+    function documentRender($doc, $isTitle = FALSE, $isIncluded = FALSE, $depth = 0){
+        if ($depth > 10) return "<red>오류!</red> 재귀적인 틀이 발견되었습니다: <b>".$doc."</b>.";
         //매직 워드
         global $fnwTitle;
                 //표시 문구
@@ -112,7 +113,7 @@
                         continue;
                     }
                     $row = mysqli_fetch_assoc($result);
-                    $incCon = documentRender($row['content'], FALSE, TRUE);
+                    $incCon = documentRender($row['content'], FALSE, TRUE, $depth+1);
                     if($inc10){
                         $incCon = str_ireplace('$10', $inc10, $incCon);
                         $incCon = str_ireplace('$11', $inc11, $incCon);
@@ -146,7 +147,7 @@
                     }
                 }
             }
-            
+
             if($isIncluded){
                 $doc = preg_replace('/\[noinclude\](.|\n)*\[\/noinclude\]/mu', '', $doc);
             }else{
@@ -178,7 +179,7 @@
             $doc = preg_replace('/(\n|^) *: *(.+)/mu', '<indent>$2</indent><br>', $doc);
 
             $doc = preg_replace('/(\n|^) *(>|&gt;) *([^\n]+)/mu', '<blockquote>$3</blockquote>', $doc);
-            
+
             $doc = preg_replace('/{{{#!wiki style="([^}]+)"\s([^}]+)}}}/mu', '<div style="$1">$2</div>', $doc);
             $doc = preg_replace('/{{{#(\w{3,6}) ([^}]+)}}}/mu', '<span style="color:#$1">$2</span>', $doc);
             $doc = preg_replace('/{{{\+([1-5]) ([^}]+)}}}/mu', '<span class="size_p_$1">$2</span>', $doc);
@@ -198,7 +199,7 @@
             $doc = preg_replace("/\[\[(비디오|동영상):([^\[]+\.(mp4|avi|mkv|mov|wmv|ogg|flv|webm))\]\]/mu", '<video height="240" style="max-width:100%" src="$2" preload="metadata" controls>', $doc);
             $doc = preg_replace("/\[\[(비디오|동영상):([^\[]+\.(mp4|avi|mkv|mov|wmv|ogg|flv|webm))\|([0-9a-z%]+)\]\]/mu", '<video height="$3" style="max-width:100%" src="$2" preload="metadata" controls>', $doc);
             $doc = preg_replace('/\[\[유튜브:(https:\/\/(www\.|m\.)?(youtube\.com\/watch\?v=|youtu\.be))?([^< \n]+)\]\]/mu', '<iframe src="https://youtube.com/embed/$4" height="240" width="100%" allowfullscreen></iframe>',$doc);
-            
+
             $doc = preg_replace("/\[\[(오디오|녹음|음성 파일):([^\[]+\.(mp3|wav|ogg))\]\]/mu", '<audio controls><source src="$2" type="audio/$3" /></audio>', $doc);
 
             $doc = preg_replace("/\[\[(외부|밖|바깥):([^\[]+)(\||\[or\]|\[\])([^\[]+)\]\]/mu", '<a class="ext-link" target="_blank" href="$2"><i class="icofont-external-link"></i>$4</a>', $doc);
@@ -215,7 +216,7 @@
 
             $doc = preg_replace("/\[\[(남|나무|남간|나무위키):([^\[]+)(\||\[or\]|\[\])([^\[]+)\]\]/mu", '<a class="ext-link" target="_blank" href="https://namu.wiki/w/$2"><i class="icofont-link"></i> $4</a>', $doc);
             $doc = preg_replace("/\[\[(남|나무|남간|나무위키):([^\[]+)\]\]/mu", '<a class="ext-link" target="_blank" href="https://namu.wiki/w/$2"><i class="icofont-link"></i> 나무:$2</a>', $doc);
-            
+
             $doc = preg_replace("/\[\[(픈|안|FNBase):([^\[]+)(\||\[or\]|\[\])([^\[]+)\]\]/mu", '<a class="ext-link" target="_blank" href="/$2">$4</a>', $doc);
             $doc = preg_replace("/\[\[(픈|안|FNBase):([^\[]+)\]\]/mu", '<a class="ext-link" target="_blank" href="/$2">FNBase:$2</a>', $doc);
 
@@ -225,7 +226,7 @@
             if(!$isIncluded){
                 if(preg_match_all('/\[\[분류\/([^\[]+)\]\]/mu', $doc, $link)) {
                     $catLink = '<span style="font-size:0.8em">분류: </span>';
-                    for($i = 0; $i < count($link[0]); $i++) { 
+                    for($i = 0; $i < count($link[0]); $i++) {
                         unset($link_arr, $isAnchor);
                         $linkT = $link[1][$i];
 
@@ -352,7 +353,7 @@
         $doc = preg_replace('/([^=]|^)====([^=]*.+?)====(\n)?/mu', '<span '.$aH.'><h4>$2</h4></span>', $doc);
         $doc = preg_replace('/([^=]|^)===([^=]*.+?)===(\n)?/mu', '<span '.$aH.'><h3>$2</h3></span>', $doc);
         $doc = preg_replace('/([^=]|^)==([^=]*.+?)==(\n)?/mu', '<span '.$aH.'><h2>$2</h2></span>', $doc);
-        
+
         $doc = preg_replace('/{{{#!folding ([^\s]+)\s([^}]+)}}}/mu', '<a onclick="foldSpan()" href="javascript:void(0)">$1</a><br><span class="foldSpan" style="display:none">$2</span>', $doc);
         $doc = preg_replace('/\(\(\(#!folding ([^\s]+)\s([^}]+)\)\)\)/mu', '<a onclick="foldSpan()" href="javascript:void(0)">$1</a><br><span class="foldSpan" style="display:none">$2</span>', $doc);
 
