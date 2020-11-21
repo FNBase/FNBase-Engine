@@ -29,10 +29,11 @@
     $sql = "SELECT `isAdmin` FROM `_account` WHERE `id` = \"".$_SESSION['fnUserId'].'"';
     $result = mysqli_query($conn, $sql);
     $iA = mysqli_fetch_assoc($result);
-        if($iA['isAdmin']){
-            $iA = TRUE;
-        }
-    
+    if($iA['isAdmin']){
+        $iA = TRUE;
+    }
+    else $iA = FALSE;
+
     if($ty == 'DIRECT_OPT' && $iA == FALSE){
         die('권한이 없습니다.');
     }

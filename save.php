@@ -11,6 +11,20 @@ if($id == NULL){
     die('<script>alert("로그인이 필요합니다.");history.back()</script>');
 }
 
+if (!empty($id) and $id != '0') {
+    $sql = "SELECT `siteBan` FROM `_account` WHERE `id` = '$id'";
+    $result = mysqli_query($conn, $sql);
+    $sB = mysqli_fetch_assoc($result);
+    if ($sB['siteBan'] >= 1){
+        die('<script>location.href = \'banned.php\'</script>');
+    }
+}
+$sql = "SELECT `ip` FROM `_ipban` WHERE `ip` = '$ip'";
+$result = mysqli_query($conn, $sql);
+if (mysqli_num_rows($result) > 0) {
+    die('<script>location.href = \'banned.php\'</script>');
+}
+
 $title = filt($_POST['title'], 'htm');
 $desc = filt($_POST['content'], 'con');
 $b = filt($_POST['b'], 'htm');

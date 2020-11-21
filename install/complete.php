@@ -529,7 +529,8 @@ if (!$conn) {
     (-3, '$P_id', '$P_name', 'AUTO_GENER', NOW(), 'fresh', '최근 활동 목록', '목록', '갱신(수정·댓글 작성)된 게시글의 목록입니다.', 0, '', NULL, NULL, NULL, NULL, NULL, 1, '기본, 잡담'),
     (-2, '$P_id', '$P_name', 'AUTO_GENER', NOW(), 'HOF', '명예의 전당', '목록', '커뮤니티에서 지지받는 게시글이 모입니다.', 0, '', NULL, NULL, NULL, NULL, NULL, 1, '기본, 잡담'),
     (-1, '$P_id', '$P_name', 'AUTO_GENER', NOW(), 'trash', '숨겨진 글 목록', '목록', '각 게시판에서 숨김 처리 된 게시글들 입니다.', 0, NULL, '주기적으로 삭제되오니, 잘못 숨겨진 글은 복구 요청을 해주세요.', '', '', NULL, NULL, 1, '기본, 잡담'),
-    (0, '$P_id', '$P_name', 'AUTO_GENER', NOW(), 'recent', '종합 글 목록', '종합', '최신순으로 정렬됩니다.', 0, '', NULL, NULL, NULL, 'listing-box', NULL, 1, '기본, 잡담');";
+    (0, '$P_id', '$P_name', 'AUTO_GENER', NOW(), 'recent', '종합 글 목록', '종합', '최신순으로 정렬됩니다.', 0, '', NULL, NULL, NULL, 'listing-box', NULL, 1, '기본, 잡담');
+    (1, '$P_id', '$P_name', 'DIRECT_OPT', NOW(), 'uita', '자유 게시판', '자유', '글감을 가리지 않고 글을 쓰실 수 있습니다. (비회원 가능)', 0, NULL, NULL, NULL, NULL, '', NULL, 1, '기본, 잡담')";
     /* 관리자 계정 생성 */
     $sql .= "INSERT INTO `_account` (`id`, `name`, `type`, `at`, `password`, `mail`, `mailAuth`, `lastIp`, `isAdmin`, `canUpload`, `siteBan`, `autoLogin`, `userAgent`, `userIntro`, `point`)
     VALUES ('$P_id', '$P_name', 'SITE_OWNER', NOW(), '".password_hash($P_password, PASSWORD_BCRYPT)."', '$P_siteEmMail', '1', '127.0.0.1', '1', '1', '0', '0', '', '', '100000000');";
